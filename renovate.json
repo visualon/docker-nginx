@@ -8,5 +8,13 @@
   "labels": ["deps"],
   "digest": {
     "extends": ["schedule:daily"]
-  }
+  },
+  "packageRules": [
+    {
+      "description": "don't pin build image",
+      "matchDepNames": "nginx",
+      "matchFileNames": ["Dockerfile"],
+      "pinDigests": false
+    }
+  ]
 }
