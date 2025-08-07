@@ -1,5 +1,5 @@
 # used by buildx
-FROM nginx AS final
+FROM nginx@sha256:84ec966e61a8c7846f509da7eb081c55c1d56817448728924a87ab32f12a72fb AS final
 
 LABEL maintainer="Michael Kriese <michael.kriese@visualon.de>"
 LABEL name="nginx"
@@ -13,5 +13,5 @@ ARG VERSION=stable
 LABEL org.opencontainers.image.version="${VERSION}"
 
 # used by renovate to update
-FROM nginx:1.28.0
+FROM nginx:1.28.0@sha256:7935b9ee80fe4076ce8ca637fe7bb0c7a1268e2bd854032a0563ecc96bfa6747
 
