@@ -2,11 +2,11 @@
 set -eo pipefail
 
 FROM=$(grep 'nginx:' Dockerfile)
-SEMVER_REGEX="=(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
+SEMVER_REGEX=":(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
 
 
 if ! [[ "$FROM" =~ $SEMVER_REGEX ]]; then
-  echo Not a semver tag - skipping
+  echo "Not a semver tag - skipping"
   exit 1
 fi
 
