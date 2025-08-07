@@ -100,7 +100,7 @@ target "push_ghcr" {
   ]
 
   annotations = [
-    "index,manifest:org.opencontainers.image.licenses=MIT"
+    "index,manifest:org.opencontainers.image.licenses=MIT",
     "index,manifest:org.opencontainers.image.authors=VisualOn GmbH <code@visualon.de>",
     "index,manifest:org.opencontainers.image.source=https://github.com/nginx/nginx",
     "index,manifest:org.opencontainers.image.version=${VERSION}",
