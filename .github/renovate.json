@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["visualon/renovate-config", "visualon/renovate-config:automergePatch"],
+  "platformAutomerge": true,
+  "automergeType": "pr",
+  "prCreation": "immediate",
+  "schedule": ["at any time"],
+  "labels": ["deps"],
+  "digest": {
+    "extends": ["schedule:daily"]
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["renovate", "renovate/renovate", "renovatebot/internal-tools"],
+      "extends": [":automergeMajor"],
+      "minimumReleaseAge": null,
+      "dependencyDashboardApproval": false
+    },
+    {
+      "matchPackageNames": ["ghcr.io/containerbase/base", "node", "yarn"],
+      "extends": [":automergeMinor"]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+name: build
+
+on:
+  push:
+
+  workflow_dispatch:
+
+env:
+  OWNER: ${{ github.repository_owner }}
+  FILE: renovate
+  IMAGE: ghcr.io/${{ github.repository_owner }}/renovate
+  BUILDKIT_PROGRESS: plain
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      packages: write
+
+    env:
+      TAG: latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Init
+        run: ./bin/init.sh
+        shell: bash
+
+      - name: docker-config
+        uses: containerbase/internal-tools@fa96b70003f221771f8c015cd3f598818ebf4d78 # v3.5.4
+        with:
+          command: docker-config
+
+      - name: Build the Docker image
+        run: docker buildx bake test
+
+      - name: Test run
+        run: docker compose --file docker-compose.test.yml run sut
+        env:
+          IMAGE: ${{ env.IMAGE }}:${{ env.TAG }}
+
+      - name: Log into registry
+        if: github.ref_name == 'main'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+      - name: Publish the Docker image
+        if: github.ref_name == 'main'
+        run: docker buildx bake build
+
+  release:
+    needs: build
+
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'main'
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Init
+        run: ./bin/init.sh
+
+      - uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5 # v1.14.0
+        with:
+          allowUpdates: true
+          body: See https://github.com/renovatebot/renovate/releases/tag/${{ env.VERSION }} for more changes
+          commit: ${{ github.sha }}
+          name: ${{ env.VERSION }}
+          tag: v${{ env.VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
