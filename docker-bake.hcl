@@ -98,4 +98,12 @@ target "push_ghcr" {
     "ghcr.io/${OWNER}/${FILE}:${TAG}",
     notequal("", VERSION) ? "ghcr.io/${OWNER}/${FILE}:${VERSION}" : "",
   ]
+
+  annotations = [
+    "index,manifest:org.opencontainers.image.licenses=MIT"
+    "index,manifest:org.opencontainers.image.authors=VisualOn GmbH <code@visualon.de>",
+    "index,manifest:org.opencontainers.image.source=https://github.com/nginx/nginx",
+    "index,manifest:org.opencontainers.image.version=${VERSION}",
+    "index,manifest:org.opencontainers.image.description=Alpine NGINX with additional modules and optimized settings",
+  ]
 }
