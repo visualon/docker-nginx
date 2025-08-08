@@ -12,6 +12,7 @@ COPY ./nginx/ /etc/nginx/
 
 RUN set -ex; \
   mkdir -p /etc/nginx/site; \
+  ln -sf /app /etc/nginx/html; \
   true
 
 ARG VERSION=stable
