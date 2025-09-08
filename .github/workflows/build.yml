@@ -40,7 +40,7 @@ jobs:
         shell: bash
 
       - name: docker-config
-        uses: containerbase/internal-tools@014815981e4be986820ad21e4ed29968c316d791 # v3.10.78
+        uses: containerbase/internal-tools@a49778ef0de8ed4a8519f01bee0982f4a31ad3b4 # v3.10.84
         with:
           command: docker-config
 
