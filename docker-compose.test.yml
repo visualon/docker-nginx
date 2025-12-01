@@ -1,6 +1,6 @@
 services:
   sut:
     image: '${IMAGE-ghcr.io/visualon/nginx}'
-    command: sh -c 'set -ex; nginx -v; nginx -t; (nginx&); sleep 3; curl -sv http://localhost:8080/test.txt'
+    command: sh -c 'set -ex; nginx -v; nginx -t; (nginx&); sleep 3; curl -sv http://localhost:8080/test.txt; curl -sv --compressed http://localhost:8080/test.txt'
     volumes:
       - ./test:/app:ro
