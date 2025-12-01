@@ -1,6 +1,4 @@
 services:
   sut:
     image: '${IMAGE-ghcr.io/visualon/nginx}'
-    command: sh -c 'set -ex; nginx -v; nginx -t; (nginx&); sleep 3; curl -sv http://localhost:8080/test.txt; curl -sv --compressed http://localhost:8080/test.txt'
-    volumes:
-      - ./test:/app:ro
+    command: sh -c 'set -ex; apk add --no-cache jq; nginx -v; nginx -t; (nginx&); echo test | tee /app/test.txt; curl -s -X POST https://lipsum.com/feed/json -d "amount=2048" -d "what=bytes" -d "start=true" | jq -r ".feed.lipsum" | tee /app/test1.txt; curl -sv http://localhost:8080/test.txt; curl -sv --compressed http://localhost:8080/test1.txt'
