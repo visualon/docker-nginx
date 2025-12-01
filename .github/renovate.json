@@ -11,14 +11,10 @@
   },
   "packageRules": [
     {
-      "matchPackageNames": ["renovate", "renovate/renovate", "renovatebot/internal-tools"],
-      "extends": [":automergeMajor"],
-      "minimumReleaseAge": null,
-      "dependencyDashboardApproval": false
-    },
-    {
-      "matchPackageNames": ["ghcr.io/containerbase/base", "node", "yarn"],
-      "extends": [":automergeMinor"]
+      "description": "don't pin build image",
+      "matchDepNames": "nginx",
+      "matchFileNames": ["Dockerfile"],
+      "pinDigests": false
     }
   ]
 }
