@@ -22,5 +22,5 @@ STOPSIGNAL SIGQUIT
 WORKDIR /app
 
 # used by renovate to update
-FROM nginx:1.28.1@sha256:88d42e21931edb8a4fae4c419b00e93cb69eb91eb860faffe91ea6915cf0a3cb
+FROM nginx:1.28.2@sha256:2ff091485e4828c289b0ba2d552554d19f952eba36b636d7ff9d6d59cf1cd3ed
 
