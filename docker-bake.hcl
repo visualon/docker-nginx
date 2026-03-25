@@ -33,7 +33,7 @@ target "base" {
 
   args = {
     ENABLED_MODULES = "brotli subs-filter"
-    NGINX_FROM_IMAGE = "public.ecr.aws/nginx/nginx:${VERSION}-alpine"
+    NGINX_FROM_IMAGE = "nginx:${VERSION}-alpine"
   }
 
   cache-from = [
